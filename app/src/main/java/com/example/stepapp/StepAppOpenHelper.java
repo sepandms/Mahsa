@@ -24,9 +24,6 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
     public static final String KEY_TIMESTAMP = "timestamp";
     public static final String KEY_HOUR = "hour";
     public static final String KEY_DAY = "day";
-    public static final String KEY_WEEK = "week";
-    public static final String KEY_MONTH = "month";
-
 
     // Default SQL for creating a table in a database
     public static final String CREATE_TABLE_SQL = "CREATE TABLE " + TABLE_NAME + " (" +

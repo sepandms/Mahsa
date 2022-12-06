@@ -62,6 +62,7 @@ public class DailyFragment extends Fragment {
         Date cDate = new Date();
         String fDate = new SimpleDateFormat("yyyy-MM-dd").format(cDate);
         dailyStepsCompleted = StepAppOpenHelper.loadDaySingleRecord(getContext(), fDate);
+        System.out.println(dailyStepsCompleted);
 
         // Text view & ProgressBars
         goalTextView = (TextView) root.findViewById(R.id.stepsGoal);
