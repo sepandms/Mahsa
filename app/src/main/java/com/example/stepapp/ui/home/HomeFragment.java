@@ -117,7 +117,6 @@ public class HomeFragment extends Fragment {
         String year = fDate.substring(0,4);
         int w = getWeekNumber(Integer.valueOf(year),Integer.valueOf(month), Integer.valueOf(day));
         String week = Integer.toString(w);
-        System.out.println(fDate.substring(5,7));
         dailyStepsCompleted = StepAppOpenHelper.loadDaySingleRecord(getContext(), fDate);
         weeklyStepsCompleted = StepAppOpenHelper.loadWeekSingleRecord(getContext(), week, year);
         monthlyStepsCompleted = StepAppOpenHelper.loadMonthSingleRecord(getContext(), month, year);
