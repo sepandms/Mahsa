@@ -16,7 +16,7 @@ import java.util.TreeMap;
 public class StepAppOpenHelper extends SQLiteOpenHelper {
 
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "stepapp";
 
     public static final String TABLE_NAME = "num_steps";
@@ -24,10 +24,12 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
     public static final String KEY_TIMESTAMP = "timestamp";
     public static final String KEY_HOUR = "hour";
     public static final String KEY_DAY = "day";
+    public static final String KEY_WEEK = "week";
+    public static final String KEY_MONTH = "month";
 
     // Default SQL for creating a table in a database
     public static final String CREATE_TABLE_SQL = "CREATE TABLE " + TABLE_NAME + " (" +
-            KEY_ID + " INTEGER PRIMARY KEY, " + KEY_DAY + " TEXT, " + KEY_HOUR + " TEXT, "
+            KEY_ID + " INTEGER PRIMARY KEY, " + KEY_MONTH + " TEXT, " + KEY_WEEK + " TEXT, " + KEY_DAY + " TEXT, " + KEY_HOUR + " TEXT, "
             + KEY_TIMESTAMP + " TEXT);";
 
 
@@ -46,7 +48,9 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    // nothing to do here
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        System.out.println("UPDATE");
+        onCreate(db);
     }
 
     /**
@@ -128,12 +132,32 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
      * Utility function to load records from a single week
      *
      * @param context: application context
-     * @param date: today's date
+     * @param week: current week number
      * @return numSteps: an integer value with the number of records in the database for the current week
      */
-    public static Integer loadWeekSingleRecord(Context context, String date){
-        // TODO: Implement
-        Integer numSteps = 0;
+    public static Integer loadWeekSingleRecord(Context context, String week){
+        List<String> steps = new LinkedList<String>();
+        // Get the readable database
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+
+        String where = StepAppOpenHelper.KEY_WEEK + " = ?";
+        String [] whereArgs = { week };
+
+        Cursor cursor = database.query(StepAppOpenHelper.TABLE_NAME, null, where, whereArgs, null,
+                null, null );
+
+        // iterate over returned elements
+        cursor.moveToFirst();
+        for (int index=0; index < cursor.getCount(); index++){
+            steps.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        database.close();
+
+        Integer numSteps = steps.size();
+        Log.d("STORED STEPS THIS MONTH: ", String.valueOf(numSteps));
         return numSteps;
     }
 
@@ -141,12 +165,32 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
      * Utility function to load records from a single month
      *
      * @param context: application context
-     * @param date: today's date
+     * @param month: current month
      * @return numSteps: an integer value with the number of records in the database for the current month
      */
-    public static Integer loadMonthSingleRecord(Context context, String date){
-        // TODO: Implement
-        Integer numSteps = 0;
+    public static Integer loadMonthSingleRecord(Context context, String month){
+        List<String> steps = new LinkedList<String>();
+        // Get the readable database
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+
+        String where = StepAppOpenHelper.KEY_MONTH + " = ?";
+        String [] whereArgs = { month };
+
+        Cursor cursor = database.query(StepAppOpenHelper.TABLE_NAME, null, where, whereArgs, null,
+                null, null );
+
+        // iterate over returned elements
+        cursor.moveToFirst();
+        for (int index=0; index < cursor.getCount(); index++){
+            steps.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        database.close();
+
+        Integer numSteps = steps.size();
+        Log.d("STORED STEPS THIS MONTH: ", String.valueOf(numSteps));
         return numSteps;
     }
 
