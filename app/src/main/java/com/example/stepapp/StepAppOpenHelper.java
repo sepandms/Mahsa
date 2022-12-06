@@ -136,15 +136,15 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
      * @param week: current week number
      * @return numSteps: an integer value with the number of records in the database for the current week
      */
-    public static Integer loadWeekSingleRecord(Context context, String week){
+    public static Integer loadWeekSingleRecord(Context context, String week, String year){
         List<String> steps = new LinkedList<String>();
         // Get the readable database
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
 
 
-        String where = StepAppOpenHelper.KEY_WEEK + " = ?";
-        String [] whereArgs = { week };
+        String where = StepAppOpenHelper.KEY_WEEK + " = ?" + " AND " + StepAppOpenHelper.KEY_YEAR + " = ?";
+        String [] whereArgs = { week, year };
 
         Cursor cursor = database.query(StepAppOpenHelper.TABLE_NAME, null, where, whereArgs, null,
                 null, null );
@@ -169,15 +169,15 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
      * @param month: current month
      * @return numSteps: an integer value with the number of records in the database for the current month
      */
-    public static Integer loadMonthSingleRecord(Context context, String month){
+    public static Integer loadMonthSingleRecord(Context context, String month, String year){
         List<String> steps = new LinkedList<String>();
         // Get the readable database
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
 
 
-        String where = StepAppOpenHelper.KEY_MONTH + " = ?";
-        String [] whereArgs = { month };
+        String where = StepAppOpenHelper.KEY_MONTH + " = ?" + " AND " + StepAppOpenHelper.KEY_YEAR + " = ?";
+        String [] whereArgs = { month, year };
 
         Cursor cursor = database.query(StepAppOpenHelper.TABLE_NAME, null, where, whereArgs, null,
                 null, null );

@@ -27,7 +27,7 @@
             android:textAlignment="center"
             android:textSize="15sp"
             tools:layout_editor_absoluteX="168dp"
-            tools:layout_editor_absoluteY="228dp" />
+            tools:layout_editor_absoluteY="78dp" />
 
         <TextView
             android:id="@+id/stepsCount"
@@ -38,7 +38,7 @@
             android:textColor="@color/colorWhite"
             android:textSize="30sp"
             tools:layout_editor_absoluteX="182dp"
-            tools:layout_editor_absoluteY="298dp" />
+            tools:layout_editor_absoluteY="148dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
             android:textAlignment="center"
             android:textSize="15sp"
             tools:layout_editor_absoluteX="191dp"
-            tools:layout_editor_absoluteY="406dp" />
+            tools:layout_editor_absoluteY="256dp" />
 
     </LinearLayout>
 
@@ -67,7 +67,8 @@
     <com.anychart.AnyChartView
         android:id="@+id/hourBarChart"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
