@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.stepapp.ui.home.HomeFragment"
+        android:label="@string/menu_steps"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_historical"
+        android:name="com.example.stepapp.ui.report.HistoricalFragment"
+        android:label="Historic"
+        tools:layout="@layout/fragment_historical" />
+
+    <fragment
+        android:id="@+id/nav_daily"
+        android:name="com.example.stepapp.ui.report.DailyFragment"
+        android:label="Daily Statistics"
+        tools:layout="@layout/fragment_daily" />
+
+    <fragment
+        android:id="@+id/nav_weekly"
+        android:name="com.example.stepapp.ui.report.WeeklyFragment"
+        android:label="Weekly Statistics"
+        tools:layout="@layout/fragment_weekly" />
+
+    <fragment
+        android:id="@+id/nav_monthly"
+        android:name="com.example.stepapp.ui.report.MonthlyFragment"
+        android:label="Monthly Statistics"
+        tools:layout="@layout/fragment_monthly" />
+
+    <fragment
+        android:id="@+id/nav_hourly"
+        android:name="com.example.stepapp.ui.report.HourFragment"
+        android:label="@string/menu_hour"
+        tools:layout="@layout/fragment_hour" />
+
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.stepapp.ui.profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>
+
+
