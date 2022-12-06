@@ -16,7 +16,7 @@ import java.util.TreeMap;
 public class StepAppOpenHelper extends SQLiteOpenHelper {
 
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "stepapp";
 
     public static final String TABLE_NAME = "num_steps";
@@ -26,10 +26,11 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
     public static final String KEY_DAY = "day";
     public static final String KEY_WEEK = "week";
     public static final String KEY_MONTH = "month";
+    public static final String KEY_YEAR = "year";
 
     // Default SQL for creating a table in a database
     public static final String CREATE_TABLE_SQL = "CREATE TABLE " + TABLE_NAME + " (" +
-            KEY_ID + " INTEGER PRIMARY KEY, " + KEY_MONTH + " TEXT, " + KEY_WEEK + " TEXT, " + KEY_DAY + " TEXT, " + KEY_HOUR + " TEXT, "
+            KEY_ID + " INTEGER PRIMARY KEY, " + KEY_YEAR + " TEXT, " + KEY_MONTH + " TEXT, " + KEY_WEEK + " TEXT, " + KEY_DAY + " TEXT, " + KEY_HOUR + " TEXT, "
             + KEY_TIMESTAMP + " TEXT);";
 
 
