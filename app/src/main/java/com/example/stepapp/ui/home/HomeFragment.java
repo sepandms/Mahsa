@@ -100,7 +100,7 @@ public class HomeFragment extends Fragment {
         // Get the number of steps stored in the current date
         Date cDate = new Date();
         String fDate = new SimpleDateFormat("yyyy-MM-dd").format(cDate);
-        stepsCompleted = StepAppOpenHelper.loadSingleRecord(getContext(), fDate);
+        dailyStepsCompleted = StepAppOpenHelper.loadDaySingleRecord(getContext(), fDate);
 
 
         // Text view & ProgressBars
@@ -208,7 +208,7 @@ public class HomeFragment extends Fragment {
         NotificationCompat.Builder notifyBuilder = getNotificationBuilder();
 
         // Instantiate the StepCounterListener
-        listener = new StepCounterListener(notifyBuilder, database, stepsCountTextView, stepsCountProgressBar);
+        listener = new StepCounterListener(notifyBuilder, database, stepsCountTextView, stepsCountProgressBar, dailyStepsCountProgressBar);
 
         // Switch button
         start_stop = (SwitchMaterial) root.findViewById(R.id.switch_start);
@@ -364,7 +364,7 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
     public static int NOTIFICATION_ID =0 ;
 
     //Get the number of stored steps for the current day
-    public int mACCStepCounter = HomeFragment.stepsCompleted;
+    public int mACCStepCounter = HomeFragment.dailyStepsCompleted;
 
     ArrayList<Integer> mACCSeries = new ArrayList<Integer>();
     ArrayList<String> mTimeSeries = new ArrayList<String>();
@@ -373,11 +373,12 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
     int stepThreshold = 10;
 
     // Android step detector
-    public int mAndroidStepCounter = HomeFragment.stepsCompleted;
+    public int mAndroidStepCounter = HomeFragment.dailyStepsCompleted;
 
     // TextView and Progress Bar
     TextView stepsCountTextView;
     ProgressBar stepsCountProgressBar;
+    ProgressBar dailyStepsCountProgressBar;
 
     // SQLite Database
     SQLiteDatabase database;
@@ -390,9 +391,10 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
     NotificationCompat.Builder notificationBuilder;
 
     // Get the notification builder, database, TextView and ProgressBar as args
-    public StepCounterListener(NotificationCompat.Builder nb, SQLiteDatabase db, TextView tv, ProgressBar pb){
+    public StepCounterListener(NotificationCompat.Builder nb, SQLiteDatabase db, TextView tv, ProgressBar pb, ProgressBar dpb){
         stepsCountTextView = tv;
         stepsCountProgressBar = pb;
+        dailyStepsCountProgressBar = dpb;
         database = db;
         notificationBuilder = nb;
     }
@@ -521,6 +523,7 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
         // Update TextView and ProgressBar
         stepsCountTextView.setText(String.valueOf(mAndroidStepCounter));
         stepsCountProgressBar.setProgress(mAndroidStepCounter);
+        dailyStepsCountProgressBar.setProgress(mAndroidStepCounter);
 
         // Insert the data in the database
         ContentValues values = new ContentValues();

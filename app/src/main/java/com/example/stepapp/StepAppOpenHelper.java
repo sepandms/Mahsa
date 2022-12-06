@@ -102,7 +102,7 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
      * @return numSteps: an integer value with the number of records in the database
      */
     //
-    public static Integer loadSingleRecord(Context context, String date){
+    public static Integer loadDaySingleRecord(Context context, String date){
         List<String> steps = new LinkedList<String>();
         // Get the readable database
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
@@ -124,6 +124,32 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
 
         Integer numSteps = steps.size();
         Log.d("STORED STEPS TODAY: ", String.valueOf(numSteps));
+        return numSteps;
+    }
+
+    /**
+     * Utility function to load records from a single week
+     *
+     * @param context: application context
+     * @param date: today's date
+     * @return numSteps: an integer value with the number of records in the database for the current week
+     */
+    public static Integer loadWeekSingleRecord(Context context, String date){
+        // TODO: Implement
+        Integer numSteps = 0;
+        return numSteps;
+    }
+
+    /**
+     * Utility function to load records from a single month
+     *
+     * @param context: application context
+     * @param date: today's date
+     * @return numSteps: an integer value with the number of records in the database for the current month
+     */
+    public static Integer loadMonthSingleRecord(Context context, String date){
+        // TODO: Implement
+        Integer numSteps = 0;
         return numSteps;
     }
 
