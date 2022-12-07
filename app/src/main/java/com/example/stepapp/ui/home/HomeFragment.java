@@ -39,7 +39,7 @@ import com.anychart.enums.HoverMode;
 import com.example.stepapp.MainActivity;
 import com.example.stepapp.R;
 import com.example.stepapp.StepAppOpenHelper;
-import com.example.stepapp.ui.profile.ProfileFragment;
+import com.example.stepapp.ui.profile.GoalsFragment;
 import com.example.stepapp.ui.report.DailyFragment;
 import com.example.stepapp.ui.report.MonthlyFragment;
 import com.example.stepapp.ui.report.WeeklyFragment;
@@ -47,7 +47,10 @@ import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.IsoFields;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -81,7 +84,7 @@ public class HomeFragment extends Fragment {
     static int weeklyStepsCompleted = 80;
     static int monthlyStepsCompleted = 80;
     static int stepsGoal = 100;
-    static int dailyStepsGoal = 100;
+    static int dailyStepsGoal = 500;
     static int weeklyStepsGoal = 1000;
     static int monthlyStepsGoal = 10000;
 
@@ -92,6 +95,15 @@ public class HomeFragment extends Fragment {
     public static NotificationManager mNotifyManager;
 
 
+    public int getWeekNumber(int year, int month, int day){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.setMinimalDaysInFirstWeek(4);
+
+        LocalDate localDate = LocalDate.of(year, month, day);
+        return localDate.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -100,8 +112,16 @@ public class HomeFragment extends Fragment {
         // Get the number of steps stored in the current date
         Date cDate = new Date();
         String fDate = new SimpleDateFormat("yyyy-MM-dd").format(cDate);
-        stepsCompleted = StepAppOpenHelper.loadSingleRecord(getContext(), fDate);
+        String day = fDate.substring(8,10);
+        String month = fDate.substring(5,7);
+        String year = fDate.substring(0,4);
+        int w = getWeekNumber(Integer.valueOf(year),Integer.valueOf(month), Integer.valueOf(day));
+        String week = Integer.toString(w);
+        dailyStepsCompleted = StepAppOpenHelper.loadDaySingleRecord(getContext(), fDate);
+        weeklyStepsCompleted = StepAppOpenHelper.loadWeekSingleRecord(getContext(), week, year);
+        monthlyStepsCompleted = StepAppOpenHelper.loadMonthSingleRecord(getContext(), month, year);
 
+        StepAppOpenHelper.loadRecords(getContext());
 
         // Text view & ProgressBars
         goalTextView = (TextView) root.findViewById(R.id.stepsGoal);
@@ -208,7 +228,7 @@ public class HomeFragment extends Fragment {
         NotificationCompat.Builder notifyBuilder = getNotificationBuilder();
 
         // Instantiate the StepCounterListener
-        listener = new StepCounterListener(notifyBuilder, database, stepsCountTextView, stepsCountProgressBar);
+        listener = new StepCounterListener(notifyBuilder, database, stepsCountTextView, stepsCountProgressBar, dailyStepsCountProgressBar, weeklyStepsCountProgressBar, monthlyStepsCountProgressBar);
 
         // Switch button
         start_stop = (SwitchMaterial) root.findViewById(R.id.switch_start);
@@ -364,7 +384,9 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
     public static int NOTIFICATION_ID =0 ;
 
     //Get the number of stored steps for the current day
-    public int mACCStepCounter = HomeFragment.stepsCompleted;
+    public int mACCStepCounter = HomeFragment.dailyStepsCompleted;
+    public int mACCWeeklyStepCounter = HomeFragment.weeklyStepsCompleted;
+    public int mACCMonthlyStepCounter = HomeFragment.monthlyStepsCompleted;
 
     ArrayList<Integer> mACCSeries = new ArrayList<Integer>();
     ArrayList<String> mTimeSeries = new ArrayList<String>();
@@ -373,16 +395,24 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
     int stepThreshold = 10;
 
     // Android step detector
-    public int mAndroidStepCounter = HomeFragment.stepsCompleted;
+    public int mAndroidStepCounter = HomeFragment.dailyStepsCompleted;
+    public int mAndroidWeeklyStepCounter = HomeFragment.weeklyStepsCompleted;
+    public int mAndroidMonthlyStepCounter = HomeFragment.monthlyStepsCompleted;
 
     // TextView and Progress Bar
     TextView stepsCountTextView;
     ProgressBar stepsCountProgressBar;
+    ProgressBar dailyStepsCountProgressBar;
+    ProgressBar weeklyStepsCountProgressBar;
+    ProgressBar monthlyStepsCountProgressBar;
 
     // SQLite Database
     SQLiteDatabase database;
 
     public String timestamp;
+    public String year;
+    public String month;
+    public String week;
     public String day;
     public String hour;
 
@@ -390,15 +420,37 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
     NotificationCompat.Builder notificationBuilder;
 
     // Get the notification builder, database, TextView and ProgressBar as args
-    public StepCounterListener(NotificationCompat.Builder nb, SQLiteDatabase db, TextView tv, ProgressBar pb){
+    public StepCounterListener(NotificationCompat.Builder nb, SQLiteDatabase db, TextView tv, ProgressBar pb, ProgressBar dpb, ProgressBar wpb, ProgressBar mpb){
         stepsCountTextView = tv;
         stepsCountProgressBar = pb;
+        dailyStepsCountProgressBar = dpb;
+        weeklyStepsCountProgressBar = wpb;
+        monthlyStepsCountProgressBar = mpb;
         database = db;
         notificationBuilder = nb;
     }
 
+    public int getWeekNumber(int year, int month, int day){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.setMinimalDaysInFirstWeek(4);
+
+        LocalDate localDate = LocalDate.of(year, month, day);
+        return localDate.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
+    }
+
     @Override
     public void onSensorChanged(SensorEvent event) {
+
+        // Timestamp
+
+        long timeInMillis = System.currentTimeMillis() + (event.timestamp - SystemClock.elapsedRealtimeNanos()) / 1000000;
+
+        // Convert the timestamp to date
+        SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
+        jdf.setTimeZone(TimeZone.getTimeZone("GMT+2"));
+        String date = jdf.format(timeInMillis);
+        timestamp = date;
 
         switch (event.sensor.getType()) {
 
@@ -410,18 +462,11 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
                 float y = event.values[1];
                 float z = event.values[2];
 
-                // Timestamp
-                long timeInMillis = System.currentTimeMillis() + (event.timestamp - SystemClock.elapsedRealtimeNanos()) / 1000000;
-
-                // Convert the timestamp to date
-                SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
-                jdf.setTimeZone(TimeZone.getTimeZone("GMT+2"));
-                String date = jdf.format(timeInMillis);
-
-
-                // Get the date, the day and the hour
-                timestamp = date;
                 day = date.substring(0,10);
+                month = day.substring(5,7);
+                year = day.substring(0,4);
+                int w = getWeekNumber(Integer.valueOf(year),Integer.valueOf(month), Integer.valueOf(day.substring(8,10)));
+                week = Integer.toString(w);
                 hour = date.substring(11,13);
 
                 /// STEP COUNTER ACC ////
@@ -489,6 +534,8 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
 
                     // Update the number of steps
                     mACCStepCounter += 1;
+                    mACCWeeklyStepCounter += 1;
+                    mACCMonthlyStepCounter += 1;
 
                     // TODO 10: Send a notification when the goal is reached
 
@@ -497,13 +544,21 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
                     // Update the TextView and the ProgressBar
                     stepsCountTextView.setText(String.valueOf(mACCStepCounter));
                     stepsCountProgressBar.setProgress(mACCStepCounter);
+                    dailyStepsCountProgressBar.setProgress(mACCStepCounter);
+                    weeklyStepsCountProgressBar.setProgress(mACCWeeklyStepCounter);
+                    monthlyStepsCountProgressBar.setProgress(mACCMonthlyStepCounter);
+
 
                     // Insert the data in the database
                     ContentValues values = new ContentValues();
                     values.put(StepAppOpenHelper.KEY_TIMESTAMP, timePointList.get(i));
                     values.put(StepAppOpenHelper.KEY_DAY, day);
                     values.put(StepAppOpenHelper.KEY_HOUR, hour);
+                    values.put(StepAppOpenHelper.KEY_MONTH, month);
+                    values.put(StepAppOpenHelper.KEY_WEEK, week);
+                    values.put(StepAppOpenHelper.KEY_YEAR, year);
                     database.insert(StepAppOpenHelper.TABLE_NAME, null, values);
+                    System.out.println(values);
                 }
 
             }
@@ -516,18 +571,34 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
 
         //Step count
         mAndroidStepCounter += (int) step;
+        mAndroidWeeklyStepCounter += (int) step;
+        mAndroidMonthlyStepCounter += (int) step;
         Log.d("NUM STEPS ANDROID", "Num.steps: " + String.valueOf(mAndroidStepCounter));
 
         // Update TextView and ProgressBar
         stepsCountTextView.setText(String.valueOf(mAndroidStepCounter));
         stepsCountProgressBar.setProgress(mAndroidStepCounter);
+        dailyStepsCountProgressBar.setProgress(mAndroidStepCounter);
+        weeklyStepsCountProgressBar.setProgress(mAndroidWeeklyStepCounter);
+        monthlyStepsCountProgressBar.setProgress(mAndroidMonthlyStepCounter);
+
+        day = timestamp.substring(0,10);
+        month = day.substring(5,7);
+        year = day.substring(0,4);
+        int w = getWeekNumber(Integer.valueOf(year),Integer.valueOf(month), Integer.valueOf(day.substring(8,10)));
+        week = Integer.toString(w);
+        hour = timestamp.substring(11,13);
 
         // Insert the data in the database
         ContentValues values = new ContentValues();
         values.put(StepAppOpenHelper.KEY_TIMESTAMP, timestamp);
         values.put(StepAppOpenHelper.KEY_DAY, day);
         values.put(StepAppOpenHelper.KEY_HOUR, hour);
+        values.put(StepAppOpenHelper.KEY_MONTH, month);
+        values.put(StepAppOpenHelper.KEY_WEEK, week);
+        values.put(StepAppOpenHelper.KEY_YEAR, year);
         database.insert(StepAppOpenHelper.TABLE_NAME, null, values);
+        System.out.println(values);
     }
 
 }

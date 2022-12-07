@@ -13,15 +13,9 @@
             android:icon="@drawable/ic_menu_bar_chart"
             android:title="Historic"/>
         <item
-            android:id="@+id/nav_hour"
-            android:icon="@drawable/ic_menu_bar_chart"
-            android:title="@string/menu_hour" />
-
-
-        <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_menu_person"
-            android:title="@string/menu_profile" />
+            android:id="@+id/nav_goals"
+            android:icon="@drawable/ic_menu_goals"
+            android:title="@string/menu_goal" />
     </group>
 </menu>
 

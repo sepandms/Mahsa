@@ -77,7 +77,7 @@ public class HourFragment  extends Fragment {
 
         // Add the number of steps in text view
         numStepsTextView = root.findViewById(R.id.numStepsTextView);
-        todaySteps = StepAppOpenHelper.loadSingleRecord(getContext(), current_time);
+        todaySteps = StepAppOpenHelper.loadDaySingleRecord(getContext(), current_time);
         numStepsTextView.setText(String.valueOf(todaySteps));
 
         shareButton = root.findViewById(R.id.shareButton);

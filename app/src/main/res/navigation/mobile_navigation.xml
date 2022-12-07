@@ -46,7 +46,7 @@
         android:id="@+id/nav_profile"
         android:name="com.example.stepapp.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_goals" />
 </navigation>
 
 
