@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -271,6 +272,54 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         // 6. Return the map with hours and number of steps
         return map;
     }
+
+    /**
+     * Utility function to get the number of steps by day in a week
+     */
+    public static Map<Integer, Integer> loadStepsByWeekDay(Context context, String week, String year){
+        // 1. Define a map to store the hour and number of steps as key-value pairs
+        Map<Integer, Integer>  map = new HashMap<> ();
+
+        // 2. Get the readable database
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        // 3. Define the query to get the data
+        Cursor cursor = database.rawQuery("SELECT day, COUNT(*)  FROM num_steps " +
+                "WHERE week = ? AND year = ? GROUP BY day ORDER BY day ASC ", new String [] {week, year});
+
+        // 4. Iterate over returned elements on the cursor
+
+        ArrayList<String> daysOfWeek = new ArrayList<>();
+        daysOfWeek.add("Mon");
+        daysOfWeek.add("Tue");
+        daysOfWeek.add("Wed");
+        daysOfWeek.add("Thu");
+        daysOfWeek.add("Fri");
+        daysOfWeek.add("Sat");
+        daysOfWeek.add("Sun");
+
+        cursor.moveToFirst();
+        for (int index=0; index < cursor.getCount(); index++){
+            //String tmpKey = daysOfWeek.get(index);
+            Integer tmpKey = Integer.parseInt(cursor.getString(0).substring(8,10));
+            Integer tmpValue = Integer.parseInt(cursor.getString(1));
+
+            //2. Put the data from the database into the map
+            map.put(tmpKey, tmpValue);
+
+
+            cursor.moveToNext();
+        }
+
+        // 5. Close the cursor and database
+        cursor.close();
+        database.close();
+
+        // 6. Return the map with hours and number of steps
+        return map;
+    }
+
 
 
     /**

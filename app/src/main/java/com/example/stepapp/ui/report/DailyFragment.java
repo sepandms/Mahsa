@@ -39,7 +39,7 @@ public class DailyFragment extends Fragment {
     public TextView goalTextView;
 
     static int dailyStepsCompleted = 0;
-    static int dailyStepsGoal = 100;
+    static int dailyStepsGoal = 500;
 
     AnyChartView anyChartView;
 

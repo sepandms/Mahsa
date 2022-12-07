@@ -9,10 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.stepapp.R;
 
-
-import java.util.Map;
-
-public class ProfileFragment extends Fragment {
+public class GoalsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -20,7 +17,7 @@ public class ProfileFragment extends Fragment {
         if (container != null) {
             container.removeAllViews();
         }
-        View root = inflater.inflate(R.layout.fragment_profile, container, false);
+        View root = inflater.inflate(R.layout.fragment_goals, container, false);
 
         return root;
     }

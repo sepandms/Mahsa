@@ -39,7 +39,7 @@ import com.anychart.enums.HoverMode;
 import com.example.stepapp.MainActivity;
 import com.example.stepapp.R;
 import com.example.stepapp.StepAppOpenHelper;
-import com.example.stepapp.ui.profile.ProfileFragment;
+import com.example.stepapp.ui.profile.GoalsFragment;
 import com.example.stepapp.ui.report.DailyFragment;
 import com.example.stepapp.ui.report.MonthlyFragment;
 import com.example.stepapp.ui.report.WeeklyFragment;
@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
     static int weeklyStepsCompleted = 80;
     static int monthlyStepsCompleted = 80;
     static int stepsGoal = 100;
-    static int dailyStepsGoal = 100;
+    static int dailyStepsGoal = 500;
     static int weeklyStepsGoal = 1000;
     static int monthlyStepsGoal = 10000;
 
@@ -120,6 +120,8 @@ public class HomeFragment extends Fragment {
         dailyStepsCompleted = StepAppOpenHelper.loadDaySingleRecord(getContext(), fDate);
         weeklyStepsCompleted = StepAppOpenHelper.loadWeekSingleRecord(getContext(), week, year);
         monthlyStepsCompleted = StepAppOpenHelper.loadMonthSingleRecord(getContext(), month, year);
+
+        StepAppOpenHelper.loadRecords(getContext());
 
         // Text view & ProgressBars
         goalTextView = (TextView) root.findViewById(R.id.stepsGoal);

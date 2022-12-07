@@ -144,7 +144,7 @@ public class MonthlyFragment extends Fragment {
 
         // Modify column chart tooltip properties
         column.tooltip()
-                .titleFormat("At hour: {%X}")
+                .titleFormat("At day: {%X}")
                 .format("{%Value}{groupsSeparator: } Steps")
                 .anchor(Anchor.RIGHT_TOP)
                 .position(Position.RIGHT_TOP)
