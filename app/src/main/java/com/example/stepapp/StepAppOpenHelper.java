@@ -276,9 +276,9 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
     /**
      * Utility function to get the number of steps by day in a week
      */
-    public static Map<Integer, Integer> loadStepsByWeekDay(Context context, String week, String year){
+    public static Map<String, Integer> loadStepsByWeekDay(Context context, String week, String year){
         // 1. Define a map to store the hour and number of steps as key-value pairs
-        Map<Integer, Integer>  map = new HashMap<> ();
+        Map<String, Integer>  map = new HashMap<> ();
 
         // 2. Get the readable database
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
@@ -299,10 +299,14 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         daysOfWeek.add("Sat");
         daysOfWeek.add("Sun");
 
+        System.out.println("STEPAPPOPENHELPER");
+        System.out.println(daysOfWeek);
+
         cursor.moveToFirst();
         for (int index=0; index < cursor.getCount(); index++){
-            //String tmpKey = daysOfWeek.get(index);
-            Integer tmpKey = Integer.parseInt(cursor.getString(0).substring(8,10));
+            String tmpKey = daysOfWeek.get(index);
+            System.out.println(tmpKey);
+            //Integer tmpKey = Integer.parseInt(cursor.getString(0).substring(8,10));
             Integer tmpValue = Integer.parseInt(cursor.getString(1));
 
             //2. Put the data from the database into the map
