@@ -264,15 +264,6 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
 
             cursor.moveToNext();
         }
-        map.put(1,20);
-        map.put(2,34);
-        map.put(3,0);
-        map.put(4, 450);
-        map.put(5,1000);
-        map.put(6, 3000);
-        map.put(7,10000);
-        map.put(8, 40);
-        map.put(14,350);
 
         // 5. Close the cursor and database
         cursor.close();
