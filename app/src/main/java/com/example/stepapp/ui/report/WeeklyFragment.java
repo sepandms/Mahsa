@@ -134,14 +134,10 @@ public class WeeklyFragment extends Fragment{
         daysOfWeek.add("6 - Sat");
         daysOfWeek.add("7 - Sun");
 
-        System.out.println("WEEKLY FRAGMENT");
-        System.out.println(daysOfWeek);
-
 
         for (int i = 0; i < 7; i++) {
             System.out.println(daysOfWeek.get(i));
             graph_map.put(daysOfWeek.get(i), 0);
-            //graph_map.put(i,0);
         }
 
         System.out.println(graph_map);

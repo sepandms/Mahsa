@@ -264,6 +264,15 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
 
             cursor.moveToNext();
         }
+        map.put(1,20);
+        map.put(2,34);
+        map.put(3,0);
+        map.put(4, 450);
+        map.put(5,1000);
+        map.put(6, 3000);
+        map.put(7,10000);
+        map.put(8, 40);
+        map.put(14,350);
 
         // 5. Close the cursor and database
         cursor.close();
@@ -291,22 +300,18 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         // 4. Iterate over returned elements on the cursor
 
         ArrayList<String> daysOfWeek = new ArrayList<>();
-        daysOfWeek.add("Mon");
-        daysOfWeek.add("Tue");
-        daysOfWeek.add("Wed");
-        daysOfWeek.add("Thu");
-        daysOfWeek.add("Fri");
-        daysOfWeek.add("Sat");
-        daysOfWeek.add("Sun");
+        daysOfWeek.add("1 - Mon");
+        daysOfWeek.add("2 - Tue");
+        daysOfWeek.add("3 - Wed");
+        daysOfWeek.add("4 - Thu");
+        daysOfWeek.add("5 - Fri");
+        daysOfWeek.add("6 - Sat");
+        daysOfWeek.add("7 - Sun");
 
-        System.out.println("STEPAPPOPENHELPER");
-        System.out.println(daysOfWeek);
 
         cursor.moveToFirst();
         for (int index=0; index < cursor.getCount(); index++){
             String tmpKey = daysOfWeek.get(index);
-            System.out.println(tmpKey);
-            //Integer tmpKey = Integer.parseInt(cursor.getString(0).substring(8,10));
             Integer tmpValue = Integer.parseInt(cursor.getString(1));
 
             //2. Put the data from the database into the map
