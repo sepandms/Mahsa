@@ -320,15 +320,44 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         return map;
     }
 
-
-
     /**
-     * Utility function to get the number of steps by day
-     *
-     * @param context: application context
-     * @return map: map with key-value pairs hour->number of steps
+     * Utility function to get the number of steps for each week of the month
      */
-    //
+    public static Map<String, Integer> loadStepsByMonthWeek(Context context, String month, String year){
+        // 1. Define a map to store the hour and number of steps as key-value pairs
+        Map<String, Integer>  map = new HashMap<> ();
+
+        // 2. Get the readable database
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        // 3. Define the query to get the data
+        Cursor cursor = database.rawQuery("SELECT week, COUNT(*)  FROM num_steps " +
+                "WHERE month = ? AND year = ? GROUP BY week ORDER BY week ASC ", new String [] {month, year});
+
+        // 4. Iterate over returned elements on the cursor
+        cursor.moveToFirst();
+        for (int index=0; index < cursor.getCount(); index++){
+            String tmpKey = "W" + String.valueOf(index+1);
+            Integer tmpValue = Integer.parseInt(cursor.getString(1));
+
+            //2. Put the data from the database into the map
+            map.put(tmpKey, tmpValue);
+
+
+            cursor.moveToNext();
+        }
+
+        // 5. Close the cursor and database
+        cursor.close();
+        database.close();
+
+        // 6. Return the map with hours and number of steps
+        return map;
+    }
+
+
+
 
 }
 
