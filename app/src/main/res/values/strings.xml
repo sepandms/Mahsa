@@ -17,6 +17,9 @@
     <string name="day_goal">Dayly Goal</string>
     <string name="weekly_goal">Weekly Goal</string>
     <string name="monthly_goal">Monthly Goal</string>
+    <string name="daily_title">Daily Summary</string>
+    <string name="weekly_title">Weekly Summary</string>
+    <string name="monthly_title">Monthly Summary</string>
     <string name="_0">78</string>
     <string name="steps">Steps</string>
     <string name="start">Start</string>
