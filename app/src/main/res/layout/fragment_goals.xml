@@ -6,14 +6,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="107dp"
-        android:layout_height="318dp"
-        android:text="Profile"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/setGoalTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Setup Your Goals!"
+            android:textSize="36dp"
+            android:textAlignment="center"/>
+
+        <EditText
+            android:id="@+id/dailyGoalInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:hint="@string/day_goal"
+            android:inputType="number"
+            android:imeOptions="actionSend"></EditText>
+
+        <EditText
+            android:id="@+id/weeklyGoalInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:hint="@string/weekly_goal"
+            android:inputType="number"
+            android:imeOptions="actionSend"></EditText>
+
+        <EditText
+            android:id="@+id/monthlyGoalInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:hint="@string/monthly_goal"
+            android:inputType="number"
+            android:imeOptions="actionSend"></EditText>
+
+
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

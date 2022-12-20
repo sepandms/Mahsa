@@ -96,6 +96,7 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         return cursor.getInt(0);
     }
 
+
     /**
      * Utility function to fetch the monthly goal
      */

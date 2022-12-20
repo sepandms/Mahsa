@@ -14,7 +14,7 @@
     <string name="menu_profile">Profile</string>
     <string name="menu_goal">Goals Setup</string>
     <string name="goal">Goal: %1$d</string>
-    <string name="day_goal">Dayly Goal</string>
+    <string name="day_goal">Daily Goal</string>
     <string name="weekly_goal">Weekly Goal</string>
     <string name="monthly_goal">Monthly Goal</string>
     <string name="daily_title">Daily Summary</string>
