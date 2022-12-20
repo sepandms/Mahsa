@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,161 +50,148 @@
             tools:layout_editor_absoluteY="406dp" />
 
 
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="80dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:id="@+id/dayString"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/day_string"
+                    android:textAlignment="textEnd"
+                    android:textSize="20sp"></TextView>
+
+                <ProgressBar
+                    android:id="@+id/dailyProgressBar"
+                    style="?android:progressBarStyleHorizontal"
+                    android:layout_width="175dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:clickable="true"
+                    android:thickness="50dp"></ProgressBar>
+
+                <ImageView
+                    android:id="@+id/dailySmiley"
+                    android:layout_width="match_parent"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/happy"
+                    android:backgroundTint="@color/colorAccent" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:id="@+id/weekString"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/week_string"
+                    android:textAlignment="textEnd"
+                    android:textSize="20sp"></TextView>
+
+                <ProgressBar
+                    android:id="@+id/weeklyProgressBar"
+                    style="?android:progressBarStyleHorizontal"
+                    android:layout_width="175dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:clickable="true"></ProgressBar>
+
+                <ImageView
+                    android:id="@+id/weeklySmiley"
+                    android:layout_width="match_parent"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/happy"
+                    android:backgroundTint="@color/colorAccent" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:id="@+id/monthString"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/month_string"
+                    android:textAlignment="textEnd"
+                    android:textSize="20sp"></TextView>
+
+                <ProgressBar
+                    android:id="@+id/monthlyProgressBar"
+                    style="?android:progressBarStyleHorizontal"
+                    android:layout_width="175dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:clickable="true"></ProgressBar>
+
+                <ImageView
+                    android:id="@+id/monthlySmiley"
+                    android:layout_width="match_parent"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/happy"
+                    android:backgroundTint="@color/colorAccent" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/activate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/activate"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="10sp"></TextView>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:checked="true"
+            android:gravity="center_horizontal"
+            android:switchMinWidth="70dp" />
+
+
     </LinearLayout>
+
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_width="417dp"
+        android:layout_height="333dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:progress="50"
         android:progressDrawable="@drawable/circle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_marginTop="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.651">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
-
-            <TextView
-                android:id="@+id/dayString"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/day_string"
-                android:textAlignment="textStart"
-                android:textSize="20sp"></TextView>
-
-            <ProgressBar
-                android:id="@+id/dailyProgressBar"
-                android:clickable="true"
-                style="?android:progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="50dp"></ProgressBar>
-
-            <ImageView
-                android:id="@+id/dailySmiley"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:layout_gravity="center"
-                android:background="@drawable/happy"
-                android:backgroundTint="@color/colorAccent" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
-
-            <TextView
-                android:id="@+id/weekString"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/week_string"
-                android:textAlignment="textStart"
-                android:textSize="20sp"></TextView>
-
-            <ProgressBar
-                android:id="@+id/weeklyProgressBar"
-                android:clickable="true"
-                style="?android:progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="50dp"></ProgressBar>
-
-            <ImageView
-                android:id="@+id/weeklySmiley"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:layout_gravity="center"
-                android:background="@drawable/happy"
-                android:backgroundTint="@color/colorAccent" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
-
-            <TextView
-                android:id="@+id/monthString"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/month_string"
-                android:textAlignment="textStart"
-                android:textSize="20sp"></TextView>
-
-            <ProgressBar
-                android:id="@+id/monthlyProgressBar"
-                android:clickable="true"
-                style="?android:progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="50dp"></ProgressBar>
-
-            <ImageView
-                android:id="@+id/monthlySmiley"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:layout_gravity="center"
-                android:background="@drawable/happy"
-                android:backgroundTint="@color/colorAccent" />
-
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="504dp"
-        android:checked="true"
-        android:minHeight="48dp"
-        android:switchMinWidth="56dp"
-        android:text="Activate Step Counting:"
-        android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
