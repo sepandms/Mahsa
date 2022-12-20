@@ -75,6 +75,8 @@ public class WeeklyFragment extends Fragment{
         }
         View root = inflater.inflate(R.layout.fragment_weekly, container, false);
 
+        weeklyStepsGoal = StepAppOpenHelper.getWeeklyGoal(getContext());
+
 
         // Get the number of steps stored in the current date
         Date cDate = new Date();
