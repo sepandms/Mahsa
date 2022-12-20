@@ -55,7 +55,7 @@ public class WeeklyFragment extends Fragment{
     String week = Integer.toString(w);
     //String current_time = new SimpleDateFormat("yyyy-MM-dd").format(cDate);
 
-    public Map<Integer, Integer> stepsByDays = null;
+    public Map<String, Integer> stepsByDays = null;
 
 
     public int getWeekNumber(int year, int month, int day){
@@ -123,35 +123,41 @@ public class WeeklyFragment extends Fragment{
         stepsByDays = StepAppOpenHelper.loadStepsByWeekDay(getContext(), week, year);
 
         // Creating a new map that contains hours of the day from 0 to 24 and number of steps during each hour set to 0
-        Map<Integer, Integer> graph_map = new TreeMap<>();
+        Map<String, Integer> graph_map = new TreeMap<>();
 
         ArrayList<String> daysOfWeek = new ArrayList<>();
-        daysOfWeek.add("Mon");
-        daysOfWeek.add("Tue");
-        daysOfWeek.add("Wed");
-        daysOfWeek.add("Thu");
-        daysOfWeek.add("Fri");
-        daysOfWeek.add("Sat");
-        daysOfWeek.add("Sun");
+        daysOfWeek.add("1 - Mon");
+        daysOfWeek.add("2 - Tue");
+        daysOfWeek.add("3 - Wed");
+        daysOfWeek.add("4 - Thu");
+        daysOfWeek.add("5 - Fri");
+        daysOfWeek.add("6 - Sat");
+        daysOfWeek.add("7 - Sun");
+
 
         for (int i = 0; i < 7; i++) {
-            //graph_map.put(daysOfWeek.get(i), 0);
-            graph_map.put(i,0);
+            System.out.println(daysOfWeek.get(i));
+            graph_map.put(daysOfWeek.get(i), 0);
         }
 
+        System.out.println(graph_map);
         // Replace the number of steps for each hour in graph_map with the number of steps read from the database
         graph_map.putAll(stepsByDays);
+
+        System.out.println(graph_map);
 
 
         //***** Create column chart using AnyChart library *********/
         // 1. Create and get the cartesian coordinate system for column chart
         Cartesian cartesian = AnyChart.column();
 
+
         // 2. Create data entries for x and y axis of the graph
         List<DataEntry> data = new ArrayList<>();
 
-        for (Map.Entry<Integer,Integer> entry : graph_map.entrySet())
+        for (Map.Entry<String,Integer> entry : graph_map.entrySet())
             data.add(new ValueDataEntry(entry.getKey(), entry.getValue()));
+
 
         // 3. Add the data to column chart and get the columns
         Column column = cartesian.column(data);
