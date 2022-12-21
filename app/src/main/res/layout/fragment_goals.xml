@@ -6,14 +6,135 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="107dp"
-        android:layout_height="318dp"
-        android:text="Profile"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/setGoalTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Setup Your Goals!"
+            android:textSize="36dp"
+            android:textAlignment="center"/>
+
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_gravity="center_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/ic_today"
+                    android:text="@string/day_goal"
+                    android:textAlignment="textEnd"
+                    android:textSize="20dp">
+                </TextView>
+
+                <EditText
+                    android:id="@+id/dailyGoalInput"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/day_goal"
+                    android:inputType="number"
+                    android:imeOptions="actionSend"></EditText>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/ic_week"
+                    android:text="@string/weekly_goal"
+                    android:textAlignment="textEnd"
+                    android:textSize="20dp">
+                </TextView>
+
+                <EditText
+                    android:id="@+id/weeklyGoalInput"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/weekly_goal"
+                    android:inputType="number"
+                    android:imeOptions="actionSend"></EditText>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/ic_month"
+                    android:text="@string/monthly_goal"
+                    android:textAlignment="textEnd"
+                    android:textSize="20dp">
+                </TextView>
+
+                <EditText
+                    android:id="@+id/monthlyGoalInput"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monthly_goal"
+                    android:inputType="number"
+                    android:imeOptions="actionSend"></EditText>
+
+            </TableRow>
+
+        </TableLayout>
+
+        <Button
+            android:id="@+id/validateGoals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:padding="5dp"
+            android:text="Validate Goals"
+            android:textSize="15dp"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal">
+        </Button>
+
+
+
+
+
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -58,6 +58,8 @@ public class DailyFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_daily, container, false);
 
+        dailyStepsGoal = StepAppOpenHelper.getDailyGoal(getContext());
+
         // Get the number of steps stored in the current date
         Date cDate = new Date();
         String fDate = new SimpleDateFormat("yyyy-MM-dd").format(cDate);

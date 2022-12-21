@@ -1,5 +1,6 @@
 package com.example.stepapp;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,7 +18,7 @@ import java.util.TreeMap;
 public class StepAppOpenHelper extends SQLiteOpenHelper {
 
 
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "stepapp";
 
     public static final String TABLE_NAME = "num_steps";
@@ -29,10 +30,20 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
     public static final String KEY_MONTH = "month";
     public static final String KEY_YEAR = "year";
 
+
+    public static final String GOALS_TABLE_NAME = "goals";
+    public static final String GOALS_KEY_ID = "id";
+    public static final String DAILY_GOAL_KEY = "daily_goal";
+    public static final String WEEKLY_GOAL_KEY = "weekly_goal";
+    public static final String MONTHLY_GOAL_KEY = "monthly_goal";
+
     // Default SQL for creating a table in a database
     public static final String CREATE_TABLE_SQL = "CREATE TABLE " + TABLE_NAME + " (" +
             KEY_ID + " INTEGER PRIMARY KEY, " + KEY_YEAR + " TEXT, " + KEY_MONTH + " TEXT, " + KEY_WEEK + " TEXT, " + KEY_DAY + " TEXT, " + KEY_HOUR + " TEXT, "
             + KEY_TIMESTAMP + " TEXT);";
+
+    public static final String CREATE_GOALS_TABLE_SQL = "CREATE TABLE " + GOALS_TABLE_NAME + " (" +
+            GOALS_KEY_ID + " INTEGER PRIMARY KEY, " + DAILY_GOAL_KEY + " INTEGER, " + WEEKLY_GOAL_KEY + " INTEGER, " + MONTHLY_GOAL_KEY + " INTEGER);";
 
 
     // The constructor
@@ -45,14 +56,74 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_SQL);
-
+        db.execSQL(CREATE_GOALS_TABLE_SQL);
+        insertDefaultGoals(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + GOALS_TABLE_NAME);
         System.out.println("UPDATE");
         onCreate(db);
+    }
+
+    /**
+     * Utility function to fetch the daily goal
+     */
+    public static Integer getDailyGoal(Context context){
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        String[] columns = new String [] {StepAppOpenHelper.DAILY_GOAL_KEY};
+        Cursor cursor = database.query(StepAppOpenHelper.GOALS_TABLE_NAME, columns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+        return cursor.getInt(0);
+    }
+
+    /**
+     * Utility function to fetch the weekly goal
+     */
+    public static Integer getWeeklyGoal(Context context){
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        String[] columns = new String [] {StepAppOpenHelper.WEEKLY_GOAL_KEY};
+        Cursor cursor = database.query(StepAppOpenHelper.GOALS_TABLE_NAME, columns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+        return cursor.getInt(0);
+    }
+
+
+    /**
+     * Utility function to fetch the monthly goal
+     */
+    public static Integer getMonthlyGoal(Context context){
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        String[] columns = new String [] {StepAppOpenHelper.MONTHLY_GOAL_KEY};
+        Cursor cursor = database.query(StepAppOpenHelper.GOALS_TABLE_NAME, columns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+        return cursor.getInt(0);
+    }
+
+    /**
+     * Insertion of the goals per default (only at application launch)
+     */
+    public void insertDefaultGoals(SQLiteDatabase db) {
+        //StepAppOpenHelper databaseOpenHelper = new StepAppOpenHelper(this.getContext());
+        //SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(StepAppOpenHelper.DAILY_GOAL_KEY, 7000);
+        values.put(StepAppOpenHelper.WEEKLY_GOAL_KEY, 49000);
+        values.put(StepAppOpenHelper.MONTHLY_GOAL_KEY, 210000);
+
+        db.insert(StepAppOpenHelper.GOALS_TABLE_NAME, null, values);
     }
 
     /**

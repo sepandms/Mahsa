@@ -64,6 +64,9 @@ public class MonthlyFragment extends Fragment {
         }
         View root = inflater.inflate(R.layout.fragment_monthly, container, false);
 
+        monthlyStepsGoal = StepAppOpenHelper.getMonthlyGoal(getContext());
+
+
         // Get the number of steps stored in the current date
         monthlyStepsCompleted = StepAppOpenHelper.loadMonthSingleRecord(getContext(), month, year);
         System.out.println(monthlyStepsCompleted);
