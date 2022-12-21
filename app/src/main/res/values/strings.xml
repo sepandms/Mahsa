@@ -41,6 +41,12 @@
     <string name="daily_report">Daily report</string>
     <string name="img_folder">app_images</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="weekly_goal_bigger">You may walk a bit more everyday to reach your weekly goal !</string>
+    <string name="monthly_goal_bigger">You may walk a bit more everyday to reach your monthly goal !</string>
+    <string name="weekly_and_monthly_goals_bigger">You may walk a bit more everyday to reach your weekly and monthly goals !</string>
+    <string name="weekly_goal_smaller">You do not have to reach your daily goal every day to reach your weekly goal !</string>
+    <string name="monthly_goal_smaller">You do not have to reach your daily goal every day to reach your monthly goal !</string>
+    <string name="weekly_and_monthly_goal_smaller">You do not have to reach your daily goal every day to reach your weekly and monthly goals !</string>
 
 </resources>
 
