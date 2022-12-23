@@ -8,6 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -371,16 +375,35 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         daysOfWeek.add("7 - Sun");
 
 
+
         cursor.moveToFirst();
-        for (int index=0; index < cursor.getCount(); index++){
+        Integer tmpValue = null;
+        for (int index=0; index < 7; index++){
+            LocalDate localDate = LocalDate.of(Integer.valueOf(year),Integer.parseInt(cursor.getString(0).substring(5,7)), Integer.parseInt(cursor.getString(0).substring(8,10)));
+            DayOfWeek dayOfWeek = DayOfWeek.from(localDate);
+            int val = dayOfWeek.get(ChronoField.DAY_OF_WEEK);
+            System.out.println(cursor.getCount());
+            System.out.println("COMPARE");
+            System.out.println(val);
+            System.out.println(index);
+
             String tmpKey = daysOfWeek.get(index);
-            Integer tmpValue = Integer.parseInt(cursor.getString(1));
+            if (index+1 == val){
+                tmpValue = Integer.parseInt(cursor.getString(1));
+                if (cursor.isLast()){
+                    map.put(tmpKey, tmpValue);
+                    break;
+                }
+                cursor.moveToNext();
+            } else {
+                tmpValue = 0;
+            }
 
             //2. Put the data from the database into the map
             map.put(tmpKey, tmpValue);
 
 
-            cursor.moveToNext();
+            //cursor.moveToNext();
         }
 
         // 5. Close the cursor and database
