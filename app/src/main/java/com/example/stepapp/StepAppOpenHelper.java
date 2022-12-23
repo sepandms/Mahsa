@@ -8,7 +8,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -371,17 +378,34 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         daysOfWeek.add("7 - Sun");
 
 
+
         cursor.moveToFirst();
-        for (int index=0; index < cursor.getCount(); index++){
-            String tmpKey = daysOfWeek.get(index);
-            Integer tmpValue = Integer.parseInt(cursor.getString(1));
+        Integer tmpValue = null;
+        if (cursor.getCount() > 0) {
+            for (int index=0; index < 7; index++){
+                LocalDate localDate = LocalDate.of(Integer.valueOf(year),Integer.parseInt(cursor.getString(0).substring(5,7)), Integer.parseInt(cursor.getString(0).substring(8,10)));
+                DayOfWeek dayOfWeek = DayOfWeek.from(localDate);
+                int val = dayOfWeek.get(ChronoField.DAY_OF_WEEK);
 
-            //2. Put the data from the database into the map
-            map.put(tmpKey, tmpValue);
+                String tmpKey = daysOfWeek.get(index);
+                if (index+1 == val){
+                    tmpValue = Integer.parseInt(cursor.getString(1));
+                    if (cursor.isLast()){
+                        map.put(tmpKey, tmpValue);
+                        break;
+                    }
+                    cursor.moveToNext();
+                } else {
+                    tmpValue = 0;
+                }
 
+                //2. Put the data from the database into the map
+                map.put(tmpKey, tmpValue);
 
-            cursor.moveToNext();
+                //cursor.moveToNext();
+            }
         }
+
 
         // 5. Close the cursor and database
         cursor.close();
@@ -403,20 +427,41 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
 
         // 3. Define the query to get the data
-        Cursor cursor = database.rawQuery("SELECT week, COUNT(*)  FROM num_steps " +
+        Cursor cursor = database.rawQuery("SELECT week, day, COUNT(*)  FROM num_steps " +
                 "WHERE month = ? AND year = ? GROUP BY week ORDER BY week ASC ", new String [] {month, year});
+
+        // create WeekFields
+        WeekFields weekFields = WeekFields.of(DayOfWeek.MONDAY, 1);
+
+        // apply weekOfMonth()
+        TemporalField weekOfMonth = weekFields.weekOfMonth();
+        Integer tmpValue = null;
+
+
 
         // 4. Iterate over returned elements on the cursor
         cursor.moveToFirst();
-        for (int index=0; index < cursor.getCount(); index++){
-            String tmpKey = "W" + String.valueOf(index+1);
-            Integer tmpValue = Integer.parseInt(cursor.getString(1));
+        if (cursor.getCount() > 0) {
+            for (int index=0; index < 7; index++){
+                LocalDate localDate = LocalDate.of(Integer.valueOf(year),Integer.parseInt(cursor.getString(1).substring(5,7)), Integer.parseInt(cursor.getString(1).substring(8,10)));
+                int week = localDate.get(weekOfMonth);
 
-            //2. Put the data from the database into the map
-            map.put(tmpKey, tmpValue);
+                String tmpKey = "W" + String.valueOf(index+1);
 
+                if (index+1 == week){
+                    tmpValue = Integer.parseInt(cursor.getString(2));
+                    if (cursor.isLast()) {
+                        map.put(tmpKey, tmpValue);
+                        break;
+                    }
+                    cursor.moveToNext();
+                } else {
+                    tmpValue = 0;
+                }
 
-            cursor.moveToNext();
+                //2. Put the data from the database into the map
+                map.put(tmpKey, tmpValue);
+            }
         }
 
         // 5. Close the cursor and database

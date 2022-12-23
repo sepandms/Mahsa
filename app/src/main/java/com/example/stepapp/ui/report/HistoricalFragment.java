@@ -103,15 +103,11 @@ public class HistoricalFragment extends Fragment {
                 } else {
                     month = String.valueOf(Integer.valueOf(month) - 1);
                 }
-                container.removeView(anyChartViewDays);
-                container.removeView(anyChartViewWeeks);
                 currentMonthTextView.setText(months[Integer.valueOf(month)-1] + " " + year);
                 stepsByDays = null;
                 stepsByWeeks = null;
-                Cartesian newLineChart = createLineChart();
-                Cartesian newColumnChart = createColumnChart();
-                anyChartViewDays.setChart(newLineChart);
-                anyChartViewWeeks.setChart(newColumnChart);
+                updateLineChart(cartesian);
+                updateColumnChart(secondCartesian);
             }
         });
         nextMonthButton = root.findViewById(R.id.next);
@@ -127,20 +123,20 @@ public class HistoricalFragment extends Fragment {
                 currentMonthTextView.setText(months[Integer.valueOf(month)-1] + " " + year);
                 stepsByDays = null;
                 stepsByWeeks = null;
-                cartesian = null;
-                secondCartesian = null;
-                anyChartViewWeeks.invalidate();
-                anyChartViewDays.invalidate();
-                cartesian = createLineChart();
-                secondCartesian = createColumnChart();
+                //cartesian = null;
+                //secondCartesian = null;
+                //anyChartViewWeeks.invalidate();
+                //anyChartViewDays.invalidate();
+                //cartesian = createLineChart();
+                //secondCartesian = createColumnChart();
 
-                APIlib.getInstance().setActiveAnyChartView(anyChartViewDays);
-                anyChartViewDays.setChart(cartesian);
-                APIlib.getInstance().setActiveAnyChartView(anyChartViewWeeks);
-                anyChartViewWeeks.setChart(secondCartesian);
+                //APIlib.getInstance().setActiveAnyChartView(anyChartViewDays);
+                //anyChartViewDays.setChart(cartesian);
+                //APIlib.getInstance().setActiveAnyChartView(anyChartViewWeeks);
+                //anyChartViewWeeks.setChart(secondCartesian);
 
-                //updateLineChart(cartesian);
-                //updateColumnChart(secondCartesian);
+                updateLineChart(cartesian);
+                updateColumnChart(secondCartesian);
             }
         });
 
@@ -229,7 +225,7 @@ public class HistoricalFragment extends Fragment {
             limit = 31;
         }
 
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < 7; i++) {
             graph_map.put("W"+ String.valueOf(i), 0);
         }
 
@@ -278,7 +274,7 @@ public class HistoricalFragment extends Fragment {
 
     public void updateLineChart(Cartesian chart){
         stepsByDays = StepAppOpenHelper.loadStepsByMonthDay(getContext(), month, year);
-        chart = null;
+        //chart = null;
 
         // Creating a new map that contains hours of the day from 0 to 24 and number of steps during each hour set to 0
         Map<Integer, Integer> graph_map = new TreeMap<>();
@@ -331,7 +327,7 @@ public class HistoricalFragment extends Fragment {
             limit = 31;
         }
 
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < 7; i++) {
             graph_map.put("W"+ String.valueOf(i), 0);
         }
 
